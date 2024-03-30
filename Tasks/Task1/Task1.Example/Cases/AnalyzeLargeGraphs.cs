@@ -48,21 +48,24 @@ public static class AnalyzeLargeGraphs
         stopWatch.Stop();
         MpiHelper.PrintLine($"Done! ({stopWatch.Elapsed})");
         stopWatch.Reset();
+
+        if (comm.Rank == 0)
+        {
+            MpiHelper.Print($"Finding MST of {graphFileName} (sequentially)... ");
+            stopWatch.Start();
+            AdjacencyListGraph<int, int> mstSeq = PrimSolver.FindMst(graph, true);
+            stopWatch.Stop();
+            MpiHelper.PrintLine($"Done! ({stopWatch.Elapsed})");
+            stopWatch.Reset();
         
-        MpiHelper.Print($"Finding MST of {graphFileName} (sequentially)... ");
-        stopWatch.Start();
-        AdjacencyListGraph<int, int> mstSeq = PrimSolver.FindMst(graph, true);
-        stopWatch.Stop();
-        MpiHelper.PrintLine($"Done! ({stopWatch.Elapsed})");
-        stopWatch.Reset();
-        
-        MpiHelper.Print($"Counting total MST weight of {graphFileName}... ");
-        int weightSeq = GetTotalWeight(mstSeq);
-        MpiHelper.PrintLine($"Done! weight={weightSeq} ({stopWatch.Elapsed})");
-        File.WriteAllText(resultDirectory + graphFileName, $"{mstSeq.VerticesCount}\n{weightSeq}");
-        stopWatch.Reset();
-        
+            MpiHelper.Print($"Counting total MST weight of {graphFileName}... ");
+            int weightSeq = GetTotalWeight(mstSeq);
+            MpiHelper.PrintLine($"Done! weight={weightSeq} ({stopWatch.Elapsed})");
+            File.WriteAllText(resultDirectory + graphFileName, $"{mstSeq.VerticesCount}\n{weightSeq}");
+            stopWatch.Reset();   
+        }
         comm.Barrier();
+        
         MpiHelper.Print($"Finding MST of {graphFileName} (parallel)... ");
         stopWatch.Start();
         AdjacencyListGraph<int, int> mstParal = PrimSolver.FindMstParallel(graph, true);

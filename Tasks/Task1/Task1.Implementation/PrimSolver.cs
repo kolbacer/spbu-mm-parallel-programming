@@ -105,7 +105,6 @@ public static class PrimSolver
         }
 
         comm.Broadcast(ref iterCondition, 0);
-        comm.Barrier();
 
         while (iterCondition)
         {
@@ -129,10 +128,8 @@ public static class PrimSolver
             }
 
             comm.Broadcast(ref defaultMinEdge, 0);
-            comm.Barrier();
-            
+
             List<Edge<V, E>> procEdges = comm.Scatter(edgeDistribution, 0);
-            comm.Barrier();
 
             Edge<V, E>? procMinEdge = null;
             
@@ -143,7 +140,6 @@ public static class PrimSolver
             }
 
             Edge<V, E>[] minEdges = comm.Gather(procMinEdge.GetValueOrDefault((Edge<V, E>)defaultMinEdge!), 0);
-            comm.Barrier();
 
             if (rank == 0)
             {
@@ -164,7 +160,6 @@ public static class PrimSolver
             }
 
             comm.Broadcast(ref iterCondition, 0);
-            comm.Barrier();
         }
 
         return rank == 0 ? MST : null;
