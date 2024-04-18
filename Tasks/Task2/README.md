@@ -1,6 +1,6 @@
 # Task2
 
-Implementation of simpplified (unbounded buffer) producer-consumer problem in C# using atomic operations for synchronization.
+Implementation of simplified (unbounded buffer) producer-consumer problem in C# using atomic operations for synchronization.
 
 ## Prerequisites
 - `.NET 7.0 SDK`
