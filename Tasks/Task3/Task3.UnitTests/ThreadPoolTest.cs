@@ -10,6 +10,14 @@ namespace Task3.UnitTests;
 [Parallelizable(scope: ParallelScope.All)]
 public class ThreadPoolTest
 {
+    public static readonly int NumOfThreads = 4;
+    
+    public static readonly WorkStrategy[] WorkStrategies =
+    {
+        WorkStrategy.WorkSharing,
+        WorkStrategy.WorkStealing
+    };
+    
     [SetUp]
     public void Setup()
     {
@@ -18,12 +26,10 @@ public class ThreadPoolTest
     /// <summary>
     /// Test of creation and enqueuing single task
     /// </summary>
-    [Test]
-    public void SingleTaskAddingTest()
+    [TestCaseSource(nameof(WorkStrategies))]
+    public void SingleTaskAddingTest(WorkStrategy strategy)
     {
-        int numOfThreads = 4;
-        WorkStrategy strategy = WorkStrategy.WorkSharing;
-        using MyThreadPool pool = new MyThreadPool(numOfThreads, strategy);
+        using MyThreadPool pool = new MyThreadPool(NumOfThreads, strategy);
 
         MyTask<int> task = new MyTask<int>(() => 100);
         pool.Enqueue(task);
@@ -34,13 +40,11 @@ public class ThreadPoolTest
     /// <summary>
     /// Test of creation and enqueuing multiple tasks
     /// </summary>
-    [Test]
-    public void MultipleTasksAddingTest()
+    [TestCaseSource(nameof(WorkStrategies))]
+    public void MultipleTasksAddingTest(WorkStrategy strategy)
     {
-        int numOfThreads = 4;
         int numOfTasks = 100;
-        WorkStrategy strategy = WorkStrategy.WorkSharing;
-        using MyThreadPool pool = new MyThreadPool(numOfThreads, strategy);
+        using MyThreadPool pool = new MyThreadPool(NumOfThreads, strategy);
         
         List<MyTask<int>> tasks = Enumerable.Range(0, numOfTasks)
             .Select<int, MyTask<int>>(i => new MyTask<int>(() => i)).ToList();
@@ -54,12 +58,10 @@ public class ThreadPoolTest
     /// <summary>
     /// Test of continuation tasks in pipeline
     /// </summary>
-    [Test]
-    public void ContinuationPipelineTest()
+    [TestCaseSource(nameof(WorkStrategies))]
+    public void ContinuationPipelineTest(WorkStrategy strategy)
     {
-        int numOfThreads = 4;
-        WorkStrategy strategy = WorkStrategy.WorkSharing;
-        using MyThreadPool pool = new MyThreadPool(numOfThreads, strategy);
+        using MyThreadPool pool = new MyThreadPool(NumOfThreads, strategy);
         
         int initValue = 0;
         MyTask<int> pipeline = pool
@@ -75,12 +77,10 @@ public class ThreadPoolTest
     /// <summary>
     /// Test of continuation multiple tasks to the same origin task
     /// </summary>
-    [Test]
-    public void ContinuationMultipleTest()
+    [TestCaseSource(nameof(WorkStrategies))]
+    public void ContinuationMultipleTest(WorkStrategy strategy)
     {
-        int numOfThreads = 4;
-        WorkStrategy strategy = WorkStrategy.WorkSharing;
-        using MyThreadPool pool = new MyThreadPool(numOfThreads, strategy);
+        using MyThreadPool pool = new MyThreadPool(NumOfThreads, strategy);
 
         MyTask<int> originTask = pool.StartNewTask(() => 5);
         
@@ -96,12 +96,10 @@ public class ThreadPoolTest
     /// <summary>
     /// Test of exceptions in task continuation
     /// </summary>
-    [Test]
-    public void ContinuationExceptionTest()
+    [TestCaseSource(nameof(WorkStrategies))]
+    public void ContinuationExceptionTest(WorkStrategy strategy)
     {
-        int numOfThreads = 4;
-        WorkStrategy strategy = WorkStrategy.WorkSharing;
-        using MyThreadPool pool = new MyThreadPool(numOfThreads, strategy);
+        using MyThreadPool pool = new MyThreadPool(NumOfThreads, strategy);
 
         MyTask<int> task1 = pool.StartNewTask(() => 1);
         MyTask<int> task2 = task1.ContinueWith(x => x + 2);
@@ -119,16 +117,14 @@ public class ThreadPoolTest
     /// <summary>
     /// Test of thread count in thread pool
     /// </summary>
-    [Test]
-    public void NumberOfThreadsTest()
+    [TestCaseSource(nameof(WorkStrategies))]
+    public void NumberOfThreadsTest(WorkStrategy strategy)
     {
-        int numOfThreads = 4;
-        WorkStrategy strategy = WorkStrategy.WorkSharing;
-        using MyThreadPool pool = new MyThreadPool(numOfThreads, strategy);
+        using MyThreadPool pool = new MyThreadPool(NumOfThreads, strategy);
 
         List<int> threadIds = pool.Threads.Values.Select(thread => thread.ManagedThreadId).ToList();
         
-        Assert.That(threadIds.Count, Is.EqualTo(numOfThreads));
+        Assert.That(threadIds.Count, Is.EqualTo(NumOfThreads));
         Assert.That(threadIds.Distinct().Count(), Is.EqualTo(threadIds.Count));
     }
 }
