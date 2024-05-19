@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Task4.Implementation\Task4.Implementation.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="pics\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="pics\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="pics\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="pics\**" />
+    </ItemGroup>
+
+</Project>

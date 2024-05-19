@@ -17,3 +17,7 @@ Implementation of simplified (unbounded buffer) producer-consumer problem in C# 
 ## [Task3](./Task3)
 
 ThreadPool implementation in C# with support of **Work Stealing** and **Work Sharing** scheduling strategies and task continuation.
+
+## [Task4](./Task4)
+
+Exam system implemented in C#, supporting 2 types of concurrent set and providing web API on ASP.NET.
