@@ -21,3 +21,7 @@ ThreadPool implementation in C# with support of **Work Stealing** and **Work Sha
 ## [Task4](./Task4)
 
 Exam system implemented in C#, supporting 2 types of concurrent set and providing web API on ASP.NET.
+
+## [Task5](./Task5)
+
+**Peer-To-Peer** chat implementation in C# using sockets.
