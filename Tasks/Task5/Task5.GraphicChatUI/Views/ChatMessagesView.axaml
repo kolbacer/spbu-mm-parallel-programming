@@ -1,0 +1,46 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Task5.GraphicChatUI.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="300"
+             x:Class="Task5.GraphicChatUI.Views.ChatMessagesView"
+             x:DataType="vm:ChatMessagesViewModel">
+    
+    <DockPanel>
+        <DockPanel.Styles>
+            <Style Selector="TextBlock.Info">
+                <Setter Property="Background" Value="Orange"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+            <Style Selector="TextBlock.You">
+                <Setter Property="Background" Value="Cyan"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+        </DockPanel.Styles>
+        <ScrollViewer Name="MessageScrollViewer">
+            <ItemsControl Name="MessageItemsControl" ItemsSource="{Binding MessageList}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel Margin="4"
+                                   HorizontalAlignment="Stretch"
+                                   TextElement.Foreground="Black">
+                            <TextBlock Text="{Binding Sender}"
+                                       Classes.Info="{Binding IsInfo}"
+                                       Classes.You="{Binding IsYou}"
+                                       FontSize="14"
+                                       HorizontalAlignment="Left"/>
+                            <TextBlock Text=": " FontSize="14" HorizontalAlignment="Left"/>
+                            <TextBlock Text="{Binding Text}" 
+                                       FontSize="14"
+                                       HorizontalAlignment="Left"/>
+                            <TextBlock Text="{Binding FormattedTimeStamp}" 
+                                       FontSize="14"
+                                       HorizontalAlignment="Right"/>
+                        </DockPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>
