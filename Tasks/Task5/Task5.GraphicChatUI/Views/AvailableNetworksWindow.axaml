@@ -1,0 +1,59 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:Task5.GraphicChatUI.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="650"
+        Width="450" Height="600"
+        x:Class="Task5.GraphicChatUI.Views.AvailableNetworksWindow"
+        Icon="/Assets/p2p-chat-logo.ico"
+        Title="Available networks"
+        x:DataType="vm:AvailableNetworksViewModel">
+
+    <ScrollViewer>
+        <ScrollViewer.Styles>
+            <Style Selector="SelectableTextBlock.Success">
+                <Setter Property="Foreground" Value="LimeGreen"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+            <Style Selector="SelectableTextBlock.Error">
+                <Setter Property="Foreground" Value="Red"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+        </ScrollViewer.Styles>
+        <ItemsControl ItemsSource="{Binding AvailableNetworkList}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="LightBlue"
+                            BorderBrush="Black"
+                            CornerRadius="10"
+                            BorderThickness="2"
+                            Margin="2"
+                            Padding="15">
+                        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto" 
+                              ColumnDefinitions="Auto, *"
+                              TextElement.Foreground="Black">
+                            <SelectableTextBlock Grid.Row="0" Grid.Column="0" Text="Device ID: " FontWeight="Bold"/>
+                            <SelectableTextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Id}"/>
+                            <SelectableTextBlock Grid.Row="1" Grid.Column="0" Text="Device name: " FontWeight="Bold"/>
+                            <SelectableTextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Name}"/>
+                            <SelectableTextBlock Grid.Row="2" Grid.Column="0" Text="Device description: " FontWeight="Bold"/>
+                            <SelectableTextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Description}"/>
+                            <SelectableTextBlock Grid.Row="3" Grid.Column="0" Text="Network interface type: " FontWeight="Bold"/>
+                            <SelectableTextBlock Grid.Row="3" Grid.Column="1" Text="{Binding NetworkInterfaceType}"/>
+                            <SelectableTextBlock Grid.Row="4" Grid.Column="0" Text="Physical address: " FontWeight="Bold"/>
+                            <SelectableTextBlock Grid.Row="4" Grid.Column="1" Text="{Binding PhysicalAddress}"/>
+                            <SelectableTextBlock Grid.Row="5" Grid.Column="0" Text="Operational status: " FontWeight="Bold"/>
+                            <SelectableTextBlock Grid.Row="5" Grid.Column="1" Text="{Binding OperationalStatus}"
+                                                 Classes.Success="{Binding IsUp}" Classes.Error="{Binding IsDown}"/>
+                            <SelectableTextBlock Grid.Row="6" Grid.Column="0" Text="Speed: " FontWeight="Bold"/>
+                            <SelectableTextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Speed}"/>
+                            <SelectableTextBlock Grid.Row="7" Grid.Column="0" Text="Ip address(es): " FontWeight="Bold"/>
+                            <SelectableTextBlock Grid.Row="7" Grid.Column="1" Text="{Binding IpAddresses}" Foreground="Blue"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </ScrollViewer>
+</Window>

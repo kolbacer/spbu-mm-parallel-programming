@@ -1,0 +1,68 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Task5.GraphicChatUI.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Task5.GraphicChatUI.Views.UserPanelView"
+             x:DataType="vm:UserPanelViewModel">
+    
+    <Grid RowDefinitions="Auto, *, Auto">
+        <!-- User info -->
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Username" FontSize="14" TextAlignment="Left" Margin="3,0,0,2" Foreground="Black"/>
+            <TextBox Watermark="User" IsEnabled="{Binding IsUserFormEnabled}" Text="{Binding Username}"/>
+            <Grid ColumnDefinitions="3*, *">
+                <StackPanel Grid.Column="0" Margin="0, 0, 5, 0">
+                    <TextBlock Text="Ip" FontSize="14" TextAlignment="Center" Margin="0,0,0,2" Foreground="Black"/>
+                    <TextBox Watermark="127.0.0.1" IsEnabled="{Binding IsUserFormEnabled}" Text="{Binding Ip}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="Port" FontSize="14" TextAlignment="Center" Margin="0,0,0,2" Foreground="Black"/>
+                    <TextBox Watermark="5000" IsEnabled="{Binding IsUserFormEnabled}" Text="{Binding Port}"/>
+                </StackPanel>
+            </Grid>
+            <Button Background="Olive" BorderBrush="Black" 
+                    HorizontalAlignment="Center"
+                    Padding="10 5 10 5"
+                    Margin="0 19 0 0"
+                    Command="{Binding ShowAvailableNetworks}">
+                Show available networks
+            </Button>
+        </StackPanel>
+        <!-- Add peer -->
+        <StackPanel Grid.Row="1" VerticalAlignment="Center">
+            <Grid ColumnDefinitions="3*, *">
+                <StackPanel Grid.Column="0" Margin="0, 0, 5, 0">
+                    <TextBlock Text="Ip" FontSize="14" TextAlignment="Center" Margin="0,0,0,2" Foreground="Black"/>
+                    <TextBox Watermark="127.0.0.1" IsEnabled="{Binding IsPeerConnectFormEnabled}" Text="{Binding PeerIp}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="Port" FontSize="14" TextAlignment="Center" Margin="0,0,0,2" Foreground="Black"/>
+                    <TextBox Watermark="5001" IsEnabled="{Binding IsPeerConnectFormEnabled}" Text="{Binding PeerPort}"/>
+                </StackPanel>
+            </Grid>
+            <Button Background="Cyan" BorderBrush="Black" 
+                    HorizontalAlignment="Center"
+                    Padding="10 5 10 5"
+                    Margin="0 5 0 0"
+                    Command="{Binding ConnectCommand}">
+                Add peer
+            </Button>
+        </StackPanel>
+        <!-- Start / Stop -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal"
+                    Margin="10"
+                    HorizontalAlignment="Center"
+                    Spacing="20">
+            <Button Background="Green" BorderBrush="Black" Padding="10 5 10 5"
+                    Command="{Binding StartCommand}">
+                Start
+            </Button>
+            <Button Background="Red" BorderBrush="Black" Padding="10 5 10 5"
+                    Command="{Binding StopCommand}">
+                Stop
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>
